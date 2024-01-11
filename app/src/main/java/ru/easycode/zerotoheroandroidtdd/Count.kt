@@ -1,6 +1,6 @@
 package ru.easycode.zerotoheroandroidtdd
 
-interface Count: UiState {
+interface Count {
     fun initial(number: String): UiState
     fun increment(number: String): UiState
     fun decrement(number: String): UiState
@@ -49,8 +49,3 @@ interface Count: UiState {
     }
 }
 
-interface UiState {
-    data class Base(val text: String): UiState
-    data class Max(val text: String): UiState
-    data class Min(val text: String): UiState
-}
