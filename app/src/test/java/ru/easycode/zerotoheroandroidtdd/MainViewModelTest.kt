@@ -46,7 +46,7 @@ class MainViewModelTest {
     @Test
     fun test() {
         viewModel.load()
-        liveDataWrapper.checkUpdateCalls(listOf(UiState.ShowProgress, UiState.ShowData))
+        liveDataWrapper.checkUpdateCalls(listOf(UiState.Default, UiState.ShowProgress, UiState.ShowData))
         repository.checkLoadCalledTimes(1)
 
         val bundleWrapper: BundleWrapper.Mutable = FakeBundleWrapper.Base()
@@ -58,7 +58,7 @@ class MainViewModelTest {
         initialize()
 
         viewModel.restore(bundleWrapper = bundleWrapperRestore)
-        liveDataWrapper.checkUpdateCalls(listOf(UiState.ShowData))
+        liveDataWrapper.checkUpdateCalls(listOf(UiState.Default, UiState.ShowData))
         repository.checkLoadCalledTimes(0)
     }
 }
