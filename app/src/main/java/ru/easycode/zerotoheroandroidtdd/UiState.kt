@@ -3,7 +3,6 @@ package ru.easycode.zerotoheroandroidtdd
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import androidx.core.widget.doBeforeTextChanged
 
 interface UiState {
 
@@ -22,6 +21,7 @@ interface UiState {
 
     data class OnEdit(val text: String): UiState {
         override fun apply(editText: EditText, textView: TextView, button: Button) {
+            // баг с курсором коли маленький editText то вона постійно на початку
             editText.setOnClickListener {
                 editText.setSelection(editText.length())
             }
