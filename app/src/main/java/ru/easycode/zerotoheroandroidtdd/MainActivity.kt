@@ -1,47 +1,50 @@
 package ru.easycode.zerotoheroandroidtdd
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.children
 import ru.easycode.zerotoheroandroidtdd.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    private var list = ArrayList<String>()
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding =
+        binding =
             ActivityMainBinding.inflate(layoutInflater).also { setContentView(it.root) }
 
-        if (savedInstanceState != null) {
-            list = savedInstanceState.getStringArrayList(TAG) as ArrayList<String>
-        }
-
         with(binding) {
-            if (list.isNotEmpty()) {
-                list.forEach { text ->
-                    val view = TextView(this@MainActivity)
-                    view.text = text
-
-                    contentLayout.addView(view)
-                }
-            }
-
             actionButton.setOnClickListener {
-                val view = TextView(this@MainActivity)
                 val text = inputEditText.text.toString()
-                view.text = text
-                inputEditText.setText("")
-                list.add(text)
+                addTextView(text)
 
-                contentLayout.addView(view)
+                inputEditText.setText("")
             }
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
+    override fun onSaveInstanceState(outState: Bundle) = with(binding) {
         super.onSaveInstanceState(outState)
-        outState.putStringArrayList(TAG, list)
+        val textList =
+            contentLayout.children.map { (it as TextView).text.toString() }.toList()
+        outState.putStringArrayList(TAG, ArrayList(textList))
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        val list = savedInstanceState.getStringArrayList(TAG) ?: ArrayList()
+
+        list.forEach { inputText ->
+            addTextView(inputText)
+        }
+    }
+
+    private fun addTextView(inputText: String) {
+        val textView = TextView(this).apply {
+            text = inputText
+        }
+        binding.contentLayout.addView(textView)
     }
 
     companion object {
