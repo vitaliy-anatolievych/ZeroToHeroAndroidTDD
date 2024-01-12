@@ -2,7 +2,6 @@ package ru.easycode.zerotoheroandroidtdd
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.TextView
 import ru.easycode.zerotoheroandroidtdd.databinding.ActivityMainBinding
 
